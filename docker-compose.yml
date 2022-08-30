@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+
+  webserver:
+
+    container_name: webserver
+    
+    image: nginx # local or remote : 로컬에 없으면 remote에서 pull
+    
+    restart: always
+    
+    volumes:
+      - ./config/nginx/default.conf:/etc/nginx/nginx.conf
+
+    depends_on:
+      - webapp
+
+    ports:
+      - 80:80
+    
+    networks:
+      - todonet
+
+
+  webapp:
+
+    container_name: webapp
+
+    restart: always
+
+    depends_on:
+      - db
+
+
+    build: 
+      context: .
+      dockerfile: ./docker/backend.dockerfile
+
+    # command: sleep infinity
+
+    networks:
+      - todonet
+
+  db:
+
+    image: mysql:8.0.30
+
+    container_name: db
+  
+    restart: always
+
+    env_file:
+      - ./config/mysql/.env
+
+    # environment:
+    #   MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      # MYSQL_DATABASE: TODOS
+
+    volumes:
+      - mysql-db:/var/lib/mysql/
+      - ./config/mysql/initdb.d/:/docker-entrypoint-initdb.d/
+
+    networks:
+      - todonet
+
+    expose:
+      - 8008
+    
+networks:
+  todonet:
+    driver: bridge
+
+# docker volume 사용
+volumes:
+  mysql-db:
