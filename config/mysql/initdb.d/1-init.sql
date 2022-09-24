@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS todo;
 
 CREATE TABLE todo(
     id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    date DATE,
+    date VARCHAR(20),
     content VARCHAR(50),
     is_done BOOLEAN
 );

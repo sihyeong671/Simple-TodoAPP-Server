@@ -6,12 +6,13 @@ services:
 
     container_name: webserver
     
-    image: nginx # local or remote : 로컬에 없으면 remote에서 pull
+    image: nginx:latest # local or remote : 로컬에 없으면 remote에서 pull
     
     restart: always
     
     volumes:
       - ./config/nginx/default.conf:/etc/nginx/nginx.conf
+      - ./config/nginx/build:/usr/share/front/build
 
     depends_on:
       - webapp
