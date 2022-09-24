@@ -1,10 +1,10 @@
-from datetime import date
+
 from typing import Union
 
 from pydantic import BaseModel
 
 class TodoBase(BaseModel):
-    date: date
+    date: str
     content: Union[str, None] = None
     is_done: bool
 
