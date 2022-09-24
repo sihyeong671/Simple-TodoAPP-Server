@@ -2,8 +2,8 @@ from datetime import datetime
 
 from sqlalchemy.orm import Session
 
-from app.models import todos as model
-from app.schemas import todos as schema
+from app.models import todo as model
+from app.schemas import todo as schema
 
 
 
