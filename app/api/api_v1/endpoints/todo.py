@@ -42,7 +42,8 @@ async def update_todo(todo_id: int, db: Session = Depends(get_db)):
     db_todo = crud.update_todo(db, todo_id)
     return db_todo
 
-@router.delete('/{todo_id}', response_model=list[schemas.Todo])
+# response_model이 return value와 다르면 에러 발생(왜 cors에러가 뜰까)
+@router.delete('/{todo_id}')
 async def delete_todo(todo_id: int, db: Session = Depends(get_db)):
     crud.delete_todo(db, todo_id)
     return {'messege':'delete success'}
